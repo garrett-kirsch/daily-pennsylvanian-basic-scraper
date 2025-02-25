@@ -53,7 +53,7 @@ def scrape_data():
         # top sports headline
         # sports section header
         sports_header = soup.find("h3", class_="frontpage-section")
-        
+        print(sports_header)
         if sports_header and "Sports" in sports_header.text:
             # Find the first article summary after the sports header
             article_summary = sports_header.find_next("div", class_="article-summary")
