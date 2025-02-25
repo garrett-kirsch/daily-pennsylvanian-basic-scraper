@@ -13,7 +13,7 @@ import requests
 import loguru
 
 
-def scrape_data_point():
+def scrape_data():
     """
     Scrapes the main headline from The Daily Pennsylvanian home page.
 
@@ -27,12 +27,25 @@ def scrape_data_point():
     loguru.logger.info(f"Request URL: {req.url}")
     loguru.logger.info(f"Request status code: {req.status_code}")
 
+    data = {}
+
     if req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
-        target_element = soup.find("a", class_="frontpage-link")
-        data_point = "" if target_element is None else target_element.text
-        loguru.logger.info(f"Data point: {data_point}")
-        return data_point
+
+        # main headline
+        main_headline_element = soup.find("a", class_="frontpage-link")
+        data["main_headline"] = "" if main_headline_element is None else main_headline_element.text
+
+        # top academic headline
+
+        # top academic summary
+
+        # top political article
+
+        # top political summary
+
+        loguru.logger.info(f"Data: {data}")
+        return data
 
 
 if __name__ == "__main__":
@@ -57,14 +70,14 @@ if __name__ == "__main__":
     # Run scrape
     loguru.logger.info("Starting scrape")
     try:
-        data_point = scrape_data_point()
+        data = scrape_data()
     except Exception as e:
         loguru.logger.error(f"Failed to scrape data point: {e}")
-        data_point = None
+        data = None
 
     # Save data
-    if data_point is not None:
-        dem.add_today(data_point)
+    if data is not None:
+        dem.add_today(data)
         dem.save()
         loguru.logger.info("Saved daily event monitor")
 
