@@ -60,7 +60,7 @@ def scrape_data():
             
             if article_summary:
                 # Get the first link in the article summary which should be the headline
-                top_sports_headline = article_summary.find("a", class_="frontpage-link medium-link newstop")
+                top_sports_headline = article_summary.find("a", class_="frontpage-link medium-link font-regular")
                 data["top_sports_headline"] = "" if top_sports_headline is None else top_sports_headline.text
 
                 
