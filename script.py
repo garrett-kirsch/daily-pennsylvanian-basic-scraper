@@ -37,15 +37,22 @@ def scrape_data():
         data["main_headline"] = "" if main_headline_element is None else main_headline_element.text
 
         # top news headline
-        top_news_headline = soup.find("a", class_="frontpage-link medium-link newstop")
-        data["top_news_headline"] = "" if top_news_headline is None else top_news_headline.text
+        news_section = soup.find("section", {"id": "news"})
+        if news_section:
+            top_news_headline = news_section.find("a", class_="frontpage-link medium-link newstop")
+            data["top_news_headline"] = "" if top_news_headline is None else top_news_headline.text
 
 
-        # top academics summary
+        # top_news_headline = soup.find("a", class_="frontpage-link medium-link newstop")
+        # data["top_news_headline"] = "" if top_news_headline is None else top_news_headline.text
 
-        # top political article
+        # # top sports headline
+        # top_sports_headline = soup.find("a", class_="frontpage-link medium-link font-regular")
+        # data["top_sports_headline"] = "" if top_sports_headline is None else top_sports_headline.text
 
-        # top political summary
+        # # top opinion headline
+        # top_opinion_headline = soup.find("a", class_="frontpage-link medium-link font-regular")
+        # data["top_opinion_headline"] = "" if top_opinion_headline is None else top_opinion_headline.text
 
         loguru.logger.info(f"Data: {data}")
         return data
