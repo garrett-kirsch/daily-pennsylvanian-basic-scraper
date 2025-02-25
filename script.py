@@ -56,7 +56,7 @@ def scrape_data():
         
         if sports_header and "Sports" in sports_header.text:
             # Find the first article summary after the sports header
-            article_summary = sports_header.find_next("a", class_="article-summary")
+            article_summary = sports_header.find_next("div", class_="article-summary")
             
             if article_summary:
                 # Get the first link in the article summary which should be the headline
