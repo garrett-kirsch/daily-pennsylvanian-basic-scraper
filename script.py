@@ -36,11 +36,11 @@ def scrape_data():
         main_headline_element = soup.find("a", class_="frontpage-link")
         data["main_headline"] = "" if main_headline_element is None else main_headline_element.text
 
-        # top academics headline
-        academics_section = soup.find("section", {"id": "academics"})
-        if academics_section:
-            top_academic_headline = academics_section.find("a", class_="article-link")
-            data["top_academic_headline"] = "" if top_academic_headline is None else top_academic_headline.text
+        # top news headline
+        news_section = soup.find("section", {"id": "news"})
+        if news_section:
+            top_news_headline = news_section.find("a", class_="article-link")
+            data["top_news_headline"] = "" if top_news_headline is None else top_news_headline.text
 
 
         # top academics summary
