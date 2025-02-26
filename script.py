@@ -42,8 +42,6 @@ def scrape_data():
             top_featured_headline = featured_header.find_next("a", class_="frontpage-link standard-link")
             data["top_featured_headline"] = "" if top_featured_headline is None else top_featured_headline.text
 
-       
-
         # top news headline
         news_section = soup.find("div", class_="col-sm-6 section-news")
         if news_section:
@@ -59,23 +57,12 @@ def scrape_data():
                 data["top_opinion_headline"] = "" if top_opinion_headline is None else top_opinion_headline.text
         
         # top sports headline
-        # sports section header
-        # sports_header = soup.find("h3", class_="frontpage-section")
-    
-        # if sports_header and "Sports" in sports_header.text:
-        #     # Find the first article summary after the sports header
-        #     article_summary = sports_header.find_next("div", class_="article-summary")
-            
-        #     if article_summary:
-        #         # Get the first link in the article summary which should be the headline
-        #         top_sports_headline = article_summary.find("a", class_="frontpage-link medium-link font-regular")
-        #         data["top_sports_headline"] = "" if top_sports_headline is None else top_sports_headline.text
-
-                
-                    
-        # # top opinion headline
-        # top_opinion_headline = soup.find("a", class_="frontpage-link medium-link font-regular")
-        # data["top_opinion_headline"] = "" if top_opinion_headline is None else top_opinion_headline.text
+        sports_header = soup.find("h3", class_="frontpage-section", string="Sports")
+        if sports_header:
+            top_sports_article = sports_header.find_next("div", class_="article-summary")
+            if top_sports_article:
+                top_sports_headline = top_sports_article.find("a", class_="frontpage-link medium-link font-regular")
+                data["top_sports_headline"] = "" if top_sports_headline is None else top_sports_headline.text
 
         loguru.logger.info(f"Data: {data}")
         return data
