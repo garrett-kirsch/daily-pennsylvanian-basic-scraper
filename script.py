@@ -43,10 +43,7 @@ def scrape_data():
             top_featured_headline = featured_header.find_next("a", class_="frontpage-link standard-link")
             data["top_featured_headline"] = "" if top_featured_headline is None else top_featured_headline.text
 
-        # featured_section = soup.find("div", class_="col-sm-6 section-news")
-        # if news_section:
-        #     top_news_headline = news_section.find("a", class_="frontpage-link medium-link newstop")
-        #     data["top_news_headline"] = "" if top_news_headline is None else top_news_headline.text
+       
 
         # top news headline
         news_section = soup.find("div", class_="col-sm-6 section-news")
@@ -54,7 +51,13 @@ def scrape_data():
             top_news_headline = news_section.find("a", class_="frontpage-link medium-link newstop")
             data["top_news_headline"] = "" if top_news_headline is None else top_news_headline.text
 
-
+        # top opinion headline
+        opinion_header = soup.find("h3", class_="frontpage-section", string="Opinion")
+        if opinion_header:
+            top_opinion_article = opinion_header.find_next("div", class_="article-summary")
+            if top_opinion_article:
+                top_opinion_headline = top_opinion_article.find("a", class_="frontpage-link medium-link font-regular")
+                data["top_opinion_headline"] = "" if top_opinion_article is None else top_opinion_article.text
         
         # top sports headline
         # sports section header
