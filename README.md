@@ -10,6 +10,10 @@ Tools like GitHub Actions, GitLab CI and others make git scraping adaptable to d
 
 This template includes a sample workflow to demonstrate the core git scraping capabilities. Read on to learn how to customize it!
 
+## Adjustments made by the User (Garrett Kirsch)
+
+I have changed the scraping to capture the top articles from the Featured, Opinion, News, and Sports sections of the front page. My first idea was to scrape the top article of the academic and politics pages to find some correlation between the two (especially with the current funding freezes), but I was not able to figure out how to navigate to other pages and decided that my first webscraping program should be kept simple. I therefore pivoted to these 4 sections on the frontpage because they were relatively easy to scrape and because I could perform a similar kind of analysis on them later.
+
 ## Overview
 
 The workflow defined in `.github/workflows/scrape.yaml` runs on a defined schedule to:
