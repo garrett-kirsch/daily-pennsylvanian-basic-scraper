@@ -75,8 +75,8 @@ def scrape_data():
         # top_opinion_headline = soup.find("a", class_="frontpage-link medium-link font-regular")
         # data["top_opinion_headline"] = "" if top_opinion_headline is None else top_opinion_headline.text
 
-        # loguru.logger.info(f"Data: {data}")
-        return_data = true
+        loguru.logger.info(f"Data: {data}")
+        return data
 
 
 if __name__ == "__main__":
