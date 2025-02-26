@@ -38,7 +38,7 @@ def scrape_data():
         data["main_headline"] = "" if main_headline_element is None else main_headline_element.text
 
         # top featured headline
-        featured_header = soup.find("h3", class_="frontpage-section", text = "Featured")
+        featured_header = soup.find("h3", class_="frontpage-section", string="Featured")
         if featured_header:
             top_featured_headline = featured_header.find_next("a", class_="frontpage-link standard-link")
             data["top_featured_headline"] = "" if top_featured_headline is None else top_featured_headline.text
