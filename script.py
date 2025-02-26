@@ -52,12 +52,12 @@ def scrape_data():
             data["top_news_headline"] = "" if top_news_headline is None else top_news_headline.text
 
         # top opinion headline
-        opinion_header = soup.find("h3", class_="frontpage-section", string="Opinion")
-        if opinion_header:
-            top_opinion_article = opinion_header.find_next("div", class_="article-summary")
-            if top_opinion_article:
-                top_opinion_headline = top_opinion_article.find("a", class_="frontpage-link medium-link font-regular")
-                data["top_opinion_headline"] = "" if top_opinion_headline is None else top_opinion_headline.text
+        # opinion_header = soup.find("h3", class_="frontpage-section", string="Opinion")
+        # if opinion_header:
+        #     top_opinion_article = opinion_header.find_next("div", class_="article-summary")
+        #     if top_opinion_article:
+        #         top_opinion_headline = top_opinion_article.find("a", class_="frontpage-link medium-link font-regular")
+        #         data["top_opinion_headline"] = "" if top_opinion_headline is None else top_opinion_headline.text
         
         # top sports headline
         # sports section header
