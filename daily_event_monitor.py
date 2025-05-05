@@ -5,6 +5,7 @@ import os
 import pathlib
 import typing
 
+pip install requests
 import requests
 import pytz
 
