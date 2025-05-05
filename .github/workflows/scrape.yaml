@@ -4,57 +4,60 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: "0 8,20 * * *"  # 📅 Scrape twice a day at 8AM and 8PM, see crontab.guru for help
+    - cron: "0 8,20 * * *"        # scrape at 8 AM & 8 PM Eastern
 
 name: Scrape Update 🔄
+
 jobs:
   update-logs:
-    name: Scrape Update 🔄
     runs-on: ubuntu-latest
+
+    # Make Pipenv put the venv in the repo so we can cache it
+    env:
+      PIPENV_VENV_IN_PROJECT: "1"
+      PIPENV_NOSPIN: "1"
+
     permissions:
-      actions: write
-      checks: write
-      contents: write
-      deployments: write
+      contents: write          # needed by the add‑and‑commit step
       pull-requests: write
-      repository-projects: write
 
     steps:
       - name: 📥 Check out repository code
         uses: actions/checkout@v4
 
-      - name: 🐍 Setup Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.9"
+          python-version: "3.9"   # keep 3.9; change if you upgrade locally
 
-      - name: 📦 Install pipenv
+      - name: 📦 Install Pipenv
         run: |
-          python -m pip install --upgrade pipenv wheel
+          python -m pip install --upgrade pip pipenv wheel
 
-      - name: 🔄 Check pipenv cache before installing dependencies
-        id: cache-pipenv
+      # Cache the venv itself and the pip download cache
+      - name: 💾 Cache virtualenv & pip
         uses: actions/cache@v4
         with:
-          path: ~/.local/share/virtualenvs
+          path: |
+            ./.venv
+            ~/.cache/pip
           key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv-
 
-      - name: 🛠 Install dependencies
-        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+      - name: 🛠 Install dependencies from Pipfile.lock
         run: |
-          touch Pipfile
           pipenv install --deploy --dev
 
-      - name: 🕵️‍♂️ Scrape content and output
+      - name: 🕵️‍♂️ Run scraper
         run: |
-          pipenv run python ./script.py
+          pipenv run python script.py
 
       - name: 🚀 Commit generated logs
         uses: EndBug/add-and-commit@v9
         with:
           message: "Commit updated data 📈"
           add: "./data/*.json"
-          cwd: "."
           default_author: github_actions
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
